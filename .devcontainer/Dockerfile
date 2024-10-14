@@ -1,4 +1,4 @@
-FROM ghcr.io/nvidia/jax:equinox
+FROM ghcr.io/nvidia/jax:jax
 
 RUN apt update
 RUN apt full-upgrade -y
@@ -10,4 +10,3 @@ ENV XLA_PYTHON_CLIENT_PREALLOCATE="false"
 ENV TF_FORCE_GPU_ALLOW_GROWTH="true"
 
 ENV PYTHONDONTWRITEBYTECODE="1"
-
