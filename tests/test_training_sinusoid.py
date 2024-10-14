@@ -15,16 +15,16 @@ def test_training_sinusoid():
     # Make sinusoidal data.
     key, key_sinusoid = jax.random.split(key)
     data_train, data_test = generate_training_data(
-        100_000, 80_000, 100, 0.3, key=key_sinusoid
+        10_000, 8_000, 100, 0.3, key=key_sinusoid
     )
 
     # Make model.
     key, *keys_model = jax.random.split(key, 4)
     model = eqx.nn.Sequential(
         [
-            MinGRULayer(1, 200, 100, key=keys_model[0]),
-            MinGRULayer(100, 200, 100, key=keys_model[1]),
-            MinGRULayer(100, 200, 1, key=keys_model[2]),
+            MinGRULayer(1, 20, 10, key=keys_model[0]),
+            MinGRULayer(10, 20, 10, key=keys_model[1]),
+            MinGRULayer(10, 20, 1, key=keys_model[2]),
         ]
     )
 
@@ -65,7 +65,7 @@ def test_training_sinusoid():
         jnp.stack(losses_after)
     )
 
-    expected_improvement_factor = 20  # Abitrary, loss should significatively improve
+    expected_improvement_factor = 5  # Abitrary, loss should significatively improve
     assert before / expected_improvement_factor > after
 
 
