@@ -72,4 +72,4 @@ def prepend_zeros(a: jax.Array) -> jax.Array:
 def scan_fn(first, second):
     a_0, b_0 = first
     a_1, b_1 = second
-    return a_0 * b_0, b_0 * a_1 + b_1
+    return a_0 * a_1, a_1 * b_0 + b_1
