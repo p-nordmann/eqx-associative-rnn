@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 
-from eqx_associative_rnn.min_gru_layer import prepend_ones, prepend_zeros
+from eqx_associative_rnn.min_gru import prepend_ones, prepend_zeros
 
 
 def test_prepend_zeros():

@@ -4,7 +4,7 @@ import jax.numpy as jnp
 import optax
 from jaxtyping import PRNGKeyArray
 
-from eqx_associative_rnn.min_gru_layer import MinGRULayer
+from eqx_associative_rnn.min_gru import MinGRULayer, MinGRUParallelLayer
 
 
 def test_training_sinusoid():
@@ -113,3 +113,31 @@ def make_step(model, inputs, opt, opt_state):
 @eqx.filter_jit
 def make_eval_step(model, inputs):
     return compute_loss(model, inputs)
+
+
+def test_parallel_implementation_against_ref():
+    seed = 0
+    key = jax.random.PRNGKey(seed)
+
+    # Make sinusoidal data.
+    key, key_sinusoid = jax.random.split(key)
+    total_size = 1_000
+    sine_period = 100
+    noise_std = 0.3
+    data = (
+        jnp.sin(jnp.arange(total_size) * (2 * jnp.pi) / sine_period)
+        + jax.random.normal(shape=(total_size,), key=key_sinusoid) * noise_std
+    )
+
+    # Instantiate two identical layers.
+    key, key_model = jax.random.split(key)
+    ref_model = MinGRULayer(1, 60, 20, key=key_model)
+    test_model = MinGRUParallelLayer(1, 60, 20, key=key_model)
+    test_model = eqx.tree_at(lambda t: t.linear_h, test_model, ref_model.cell.linear_h)
+    test_model = eqx.tree_at(lambda t: t.linear_z, test_model, ref_model.cell.linear_z)
+    test_model = eqx.tree_at(lambda t: t.linear_out, test_model, ref_model.linear_out)
+
+    # Process the input and compare the output.
+    ref_out = ref_model(data[:, jnp.newaxis])
+    test_out = test_model(data[:, jnp.newaxis])
+    assert jnp.allclose(test_out, ref_out, atol=1e-7).item()
