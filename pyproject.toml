@@ -14,19 +14,21 @@ authors = [{ name = "Pierre-Louis Nordmann" }]
 description = "Implementations of associative RNNs using Jax and Equinox."
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "jax~=0.4",
-    "jaxlib~=0.4",
-    "jaxtyping~=0.2.0",
-    "equinox~=0.11.0",
-    "pytest~=7.4.0",
-    "beartype~=0.16.0"
-]
+dependencies = ["jax>=0.6.0", "jaxtyping>=0.3.2", "equinox>=0.12.1"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
+[dependency-groups]
+dev = [
+    "optax>=0.2.5",
+    "pytest>=8.3.5",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff.lint]
+ignore = ["F722"]
