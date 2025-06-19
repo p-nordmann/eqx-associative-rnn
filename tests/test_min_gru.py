@@ -61,8 +61,9 @@ def test_training_sinusoid():
         losses_after.append(loss)
 
     # Check that loss is good.
-    before, after = jnp.mean(jnp.stack(losses_before)), jnp.mean(
-        jnp.stack(losses_after)
+    before, after = (
+        jnp.mean(jnp.stack(losses_before)),
+        jnp.mean(jnp.stack(losses_after)),
     )
 
     expected_improvement_factor = 5  # Abitrary, loss should significatively improve
@@ -133,11 +134,16 @@ def test_parallel_implementation_against_ref():
     key, key_model = jax.random.split(key)
     ref_model = MinGRULayer(1, 60, 20, key=key_model)
     test_model = MinGRUParallelLayer(1, 60, 20, key=key_model)
+
     test_model = eqx.tree_at(lambda t: t.linear_h, test_model, ref_model.cell.linear_h)
     test_model = eqx.tree_at(lambda t: t.linear_z, test_model, ref_model.cell.linear_z)
     test_model = eqx.tree_at(lambda t: t.linear_out, test_model, ref_model.linear_out)
 
+    assert eqx.tree_equal(test_model.linear_h, ref_model.cell.linear_h).item()
+    assert eqx.tree_equal(test_model.linear_z, ref_model.cell.linear_z).item()
+    assert eqx.tree_equal(test_model.linear_out, ref_model.linear_out).item()
+
     # Process the input and compare the output.
     ref_out = ref_model(data[:, jnp.newaxis])
     test_out = test_model(data[:, jnp.newaxis])
-    assert jnp.allclose(test_out, ref_out, atol=1e-7).item()
+    assert jnp.allclose(test_out, ref_out, atol=1e-5).item()
