@@ -22,10 +22,7 @@ classifiers = [
 ]
 
 [dependency-groups]
-dev = [
-    "optax>=0.2.5",
-    "pytest>=8.3.5",
-]
+dev = ["optax>=0.2.5", "pytest>=8.3.5"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

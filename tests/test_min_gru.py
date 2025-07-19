@@ -22,9 +22,9 @@ def test_training_sinusoid():
     key, *keys_model = jax.random.split(key, 4)
     model = eqx.nn.Sequential(
         [
-            MinGRULayer(1, 20, 10, key=keys_model[0]),
-            MinGRULayer(10, 20, 10, key=keys_model[1]),
-            MinGRULayer(10, 20, 1, key=keys_model[2]),
+            MinGRUParallelLayer(1, 20, 10, key=keys_model[0]),
+            MinGRUParallelLayer(10, 20, 10, key=keys_model[1]),
+            MinGRUParallelLayer(10, 20, 1, key=keys_model[2]),
         ]
     )
 
