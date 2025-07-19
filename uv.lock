@@ -61,7 +61,7 @@ wheels = [
 ]
 
 [[package]]
-name = "eqx-associative-rnn"
+name = "eqx-min-gru"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [

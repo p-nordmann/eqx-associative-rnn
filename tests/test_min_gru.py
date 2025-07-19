@@ -4,7 +4,7 @@ import jax.numpy as jnp
 import optax
 from jaxtyping import PRNGKeyArray
 
-from eqx_associative_rnn.min_gru import MinGRULayer, MinGRUParallelLayer
+from eqx_min_gru.min_gru import MinGRULayer, MinGRUParallelLayer
 
 
 def test_training_sinusoid():

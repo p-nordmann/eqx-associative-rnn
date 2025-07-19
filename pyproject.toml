@@ -2,16 +2,11 @@
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["eqx_associative_rnn*"]
-namespaces = false
-
 [project]
-name = "eqx-associative-rnn"
+name = "eqx-min-gru"
 version = "0.0.1"
 authors = [{ name = "Pierre-Louis Nordmann" }]
-description = "Implementations of associative RNNs using Jax and Equinox."
+description = "Implementations of min-GRU using Jax and Equinox."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = ["jax>=0.6.0", "jaxtyping>=0.3.2", "equinox>=0.12.1"]
@@ -29,3 +24,6 @@ testpaths = ["tests"]
 
 [tool.ruff.lint]
 ignore = ["F722"]
+
+[tool.pyrefly]
+search_path = ["eqx_min_gru"]
