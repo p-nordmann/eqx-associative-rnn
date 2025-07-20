@@ -1,2 +1,3 @@
-# eqx-associative-rnn
-Implementations of associative RNNs using Jax and Equinox.
+# eqx-mingru
+
+Implementations of MinGRU using Jax and Equinox.
