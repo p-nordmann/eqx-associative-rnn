@@ -61,7 +61,7 @@ wheels = [
 ]
 
 [[package]]
-name = "eqx-min-gru"
+name = "eqx-mingru"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [

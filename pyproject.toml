@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "eqx-min-gru"
+name = "eqx-mingru"
 version = "0.0.1"
 authors = [{ name = "Pierre-Louis Nordmann" }]
 description = "Implementations of min-GRU using Jax and Equinox."
@@ -24,6 +24,3 @@ testpaths = ["tests"]
 
 [tool.ruff.lint]
 ignore = ["F722"]
-
-[tool.pyrefly]
-search_path = ["eqx_min_gru"]
